@@ -97,11 +97,6 @@ class AlexaRoute extends Route
      */
     protected function compileRoute()
     {
-        //todo: we're doing this to support < 5.4 - remove this in 5.5
-        if(is_callable("parent::extractOptionalParameters")){
-            return parent::compileRoute();
-        }
-
         if (! $this->compiled) {
 
             //todo: this is a bit ugly - we should go deeper and solve the real problem
