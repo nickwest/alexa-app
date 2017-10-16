@@ -160,7 +160,7 @@ class Alexa
         {
             $url = url(config('alexa.audio.proxy.route') . '/' . base64_encode($url));
         }
-        
+
         $audio = new Play($url, $token, $offsetInMilliseconds, $playBehavior, $expectedPreviousToken);
 
         $response = new AlexaResponse();
@@ -223,6 +223,25 @@ class Alexa
         $response = new AlexaResponse(new Speech($question));
 
         $response->setIsPrompt(true);
+        $response->endSession(false); // When asking for a response, we don't want to end the session
+
+        return $response;
+    }
+
+    /**
+     * @param string $question
+     *
+     * @return \Develpr\AlexaApp\Response\AlexaResponse
+     */
+    public function askssml($question)
+    {
+        $ssml = new SSML();
+        $ssml->setValue($question);
+
+        $response = new AlexaResponse($ssml);
+
+        $response->setIsPrompt(true);
+        $response->endSession(false); // When asking for a response, we don't want to end the session
 
         return $response;
     }
